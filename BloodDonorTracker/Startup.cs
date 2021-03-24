@@ -1,7 +1,9 @@
+using System.IdentityModel.Tokens.Jwt;
 using BloodDonorTracker.Context;
 using BloodDonorTracker.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,11 +24,18 @@ namespace BloodDonorTracker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // Database Connection
             services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<IdentityContext>(options => options.UseSqlServer(_configuration.GetConnectionString("IdentityConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddEntityFrameworkStores<IdentityContext>();
 
             // Essential Extention services
             services.ApplicationServices();
             services.DependencyInjection();
+            services.AddIdentityServices(_configuration);
 
             // Register the Swagger generator
             services.AddSwaggerGen();
@@ -44,6 +53,7 @@ namespace BloodDonorTracker
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             #region --Swagger-Configuration--
