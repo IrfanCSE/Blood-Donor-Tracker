@@ -24,8 +24,12 @@ namespace BloodDonorTracker
             services.AddControllers();
             services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
+            // Essential Extention services
             services.ApplicationServices();
             services.DependencyInjection();
+
+            // Register the Swagger generator
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +45,16 @@ namespace BloodDonorTracker
             app.UseRouting();
 
             app.UseAuthorization();
+
+            #region --Swagger-Configuration--
+            app.UseSwagger();
+
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BloodDonorTracker API");
+            });
+            #endregion
 
             app.UseEndpoints(endpoints =>
             {
