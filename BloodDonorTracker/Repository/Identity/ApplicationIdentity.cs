@@ -13,12 +13,30 @@ namespace BloodDonorTracker.Repository.Identity
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public ApplicationIdentity(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly ITokenService _token;
+        public ApplicationIdentity(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, ITokenService token)
         {
+            _token = token;
             _roleManager = roleManager;
             _userManager = userManager;
 
         }
+
+        public async Task<LoginResponse> Login(string email, string password)
+        {
+            var appUser = await _userManager.FindByEmailAsync(email);
+
+            if (appUser == null) throw new Exception($"Invalid Information");
+
+            var isAuth = await _userManager.CheckPasswordAsync(appUser, password);
+
+            if (!isAuth) throw new Exception("Invalid Information");
+
+            var key = _token.CreateToken(appUser);
+
+            return new LoginResponse { Token = key };
+        }
+
         public async Task<ResponseMessage> RegisterUser(RegisterDTO user)
         {
             try

@@ -27,8 +27,20 @@ namespace BloodDonorTracker.Controllers
                 throw new Exception("Invalid Information");
             }
 
-            var data = await _Repository.RegisterUser(user);
-            return Ok(data);
+            return Ok(await _Repository.RegisterUser(user));
+        }
+
+        [HttpGet]
+        [Route("Login")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception("Invalid Information");
+            }
+
+            return Ok(await _Repository.Login(email,password));
         }
     }
 }

@@ -7,5 +7,6 @@ namespace BloodDonorTracker.iRepository.Identity
     public interface IApplicationIdentity
     {
         public Task<ResponseMessage> RegisterUser(RegisterDTO user);
+        public Task<LoginResponse> Login(string email, string password);
     }
 }
