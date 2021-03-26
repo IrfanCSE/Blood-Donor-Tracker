@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using BloodDonorTracker.Context;
+using BloodDonorTracker.ErrorHandling;
 using BloodDonorTracker.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,9 +30,6 @@ namespace BloodDonorTracker
             services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<IdentityContext>(options => options.UseSqlServer(_configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                            .AddEntityFrameworkStores<IdentityContext>();
-
             // Essential Extention services
             services.ApplicationServices();
             services.DependencyInjection();
@@ -55,6 +53,8 @@ namespace BloodDonorTracker
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.ConfigureCustomExceptionMiddleware();
 
             #region --Swagger-Configuration--
             app.UseSwagger();

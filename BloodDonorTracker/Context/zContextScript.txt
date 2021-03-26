@@ -1,0 +1,5 @@
+// Migrations add for Identity
+dotnet ef migrations add {migration name} -p BloodDonorTracker -c IdentityContext -o Data/Migrations/Identity
+
+// Update DataBase for Identity
+dotnet ef database update -p BloodDonorTracker -c IdentityContext

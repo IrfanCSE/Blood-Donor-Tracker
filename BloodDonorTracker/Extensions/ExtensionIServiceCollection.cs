@@ -1,4 +1,6 @@
 using BloodDonorTracker.Helper;
+using BloodDonorTracker.iRepository.Identity;
+using BloodDonorTracker.Repository.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BloodDonorTracker.Extensions
@@ -7,6 +9,7 @@ namespace BloodDonorTracker.Extensions
     {
         public static void DependencyInjection(this IServiceCollection services)
         {
+            services.AddScoped<IApplicationIdentity,ApplicationIdentity>();
         }
         public static void ApplicationServices(this IServiceCollection services)
         {

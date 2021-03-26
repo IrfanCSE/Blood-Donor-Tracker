@@ -13,10 +13,14 @@ namespace BloodDonorTracker.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection service, IConfiguration config)
         {
-            var builder = service.AddIdentityCore<AppUser>();
-            builder = new IdentityBuilder(builder.UserType, builder.Services);
-            builder.AddEntityFrameworkStores<IdentityContext>();
-            builder.AddSignInManager<SignInManager<AppUser>>();
+            // var builder = service.AddIdentityCore<AppUser>();
+            // builder = new IdentityBuilder(builder.UserType, builder.Services);
+            // builder.AddEntityFrameworkStores<IdentityContext>();
+            // builder.AddSignInManager<SignInManager<AppUser>>();
+
+            service.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                             .AddEntityFrameworkStores<IdentityContext>()
+                             .AddDefaultTokenProviders();
 
             service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(option =>
@@ -27,7 +31,8 @@ namespace BloodDonorTracker.Extensions
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Token:Key"])),
                         ValidateIssuer = true,
                         ValidIssuer = config["Token:Issuer"],
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        RequireExpirationTime = true
                     };
                 });
 
