@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace BloodDonorTracker
 {
@@ -33,8 +34,8 @@ namespace BloodDonorTracker
             services.DependencyInjection();
             services.AddIdentityServices(_configuration);
 
-            // Register the Swagger generator
-            services.AddSwaggerGen();
+            // Register the Swagger generator : Default : services.AddSwaggerGen()
+            services.AddSwaggerGenService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
