@@ -5,13 +5,13 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace BloodDonorTracker.Controllers
 {
-    //[Authorize]
     [ApiController]
     [Route("donor/[controller]")]
     public class DonorController : ControllerBase
     {
         [HttpGet]
         [Route("GetAuthData")]
+        [Authorize]
         [SwaggerOperation(Description = "Example {  }")]
         public async Task<IActionResult> GetAuthData()
         {

@@ -1,10 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
 using BloodDonorTracker.Context;
 using BloodDonorTracker.ErrorHandling;
 using BloodDonorTracker.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
