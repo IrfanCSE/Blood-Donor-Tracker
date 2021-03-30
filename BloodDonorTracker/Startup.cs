@@ -51,11 +51,6 @@ namespace BloodDonorTracker
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.ConfigureCustomExceptionMiddleware();
-
             #region --Swagger-Configuration--
             app.UseSwagger();
 
@@ -65,6 +60,11 @@ namespace BloodDonorTracker
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BloodDonorTracker API");
             });
             #endregion
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.ConfigureCustomExceptionMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
