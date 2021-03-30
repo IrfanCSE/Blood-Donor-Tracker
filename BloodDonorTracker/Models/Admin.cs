@@ -4,6 +4,7 @@ namespace BloodDonorTracker.Models
     {
         public long AdminIdPk { get; set; }
         public string AdminUserIdFk { get; set; }
+        public AppUser AdminUserNav { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
     }
