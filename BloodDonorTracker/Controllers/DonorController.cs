@@ -12,6 +12,7 @@ namespace BloodDonorTracker.Controllers
     {
         [HttpGet]
         [Route("GetAuthData")]
+        [Authorize]
         [SwaggerOperation(Description = "Example {  }")]
         public async Task<IActionResult> GetAuthData()
         {

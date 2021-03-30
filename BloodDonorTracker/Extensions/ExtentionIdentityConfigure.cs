@@ -13,17 +13,14 @@ namespace BloodDonorTracker.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection service, IConfiguration config)
         {
-            // var builder = service.AddIdentityCore<AppUser>();
-            // builder = new IdentityBuilder(builder.UserType, builder.Services);
-            // builder.AddEntityFrameworkStores<IdentityContext>();
-            // builder.AddSignInManager<SignInManager<AppUser>>();
+            service.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityContext>();
 
-            service.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                             .AddEntityFrameworkStores<IdentityContext>()
-                             .AddDefaultTokenProviders();
-
-            service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(option =>
+            service.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(option =>
                 {
                     option.TokenValidationParameters = new TokenValidationParameters
                     {
