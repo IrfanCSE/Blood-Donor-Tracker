@@ -61,7 +61,7 @@ namespace BloodDonorTracker
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BloodDonorTracker API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blood Donor Tracker API");
             });
             #endregion
 
