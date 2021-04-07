@@ -6,7 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace BloodDonorTracker.Controllers
 {
     [ApiController]
-    [Route("donor/[controller]")]
+    [Route("api/[controller]")]
     public class DonorController : ControllerBase
     {
         [HttpGet]

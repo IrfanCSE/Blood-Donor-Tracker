@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace BloodDonorTracker.Controllers
 {
     [ApiController]
-    [Route("identity/[controller]")]
+    [Route("api/[controller]")]
     public class IdentityController : ControllerBase
     {
         private readonly IApplicationIdentity _Repository;
