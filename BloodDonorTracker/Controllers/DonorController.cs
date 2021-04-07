@@ -7,11 +7,11 @@ namespace BloodDonorTracker.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class DonorController : ControllerBase
     {
         [HttpGet]
         [Route("GetAuthData")]
-        [Authorize]
         [SwaggerOperation(Description = "Example {  }")]
         public async Task<IActionResult> GetAuthData()
         {
