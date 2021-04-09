@@ -60,6 +60,8 @@ namespace BloodDonorTracker
             });
             #endregion
 
+            app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
             app.UseAuthentication();
             app.UseAuthorization();
 

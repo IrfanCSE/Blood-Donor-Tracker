@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using BloodDonorTracker.DTOs.Identity;
 using BloodDonorTracker.iRepository.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -40,7 +41,16 @@ namespace BloodDonorTracker.Controllers
                 throw new Exception("Invalid Information");
             }
 
-            return Ok(await _Repository.Login(email,password));
+            return Ok(await _Repository.Login(email, password));
+        }
+
+        [HttpGet]
+        [Route("GetCurrentUser")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var claim = HttpContext.User;
+            return Ok(await _Repository.GetCurrentUser(claim));
         }
     }
 }

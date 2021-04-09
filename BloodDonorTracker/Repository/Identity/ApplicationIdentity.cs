@@ -1,10 +1,13 @@
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BloodDonorTracker.DTOs.Identity;
+using BloodDonorTracker.Extensions;
 using BloodDonorTracker.Helper;
 using BloodDonorTracker.iRepository.Identity;
 using BloodDonorTracker.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace BloodDonorTracker.Repository.Identity
@@ -22,6 +25,18 @@ namespace BloodDonorTracker.Repository.Identity
 
         }
 
+        public async Task<LoginResponse> GetCurrentUser(ClaimsPrincipal claim)
+        {
+            var user = await _userManager.FindByEmailWithClaimPrincipalAsync(claim);
+
+            return new LoginResponse
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                Token = _token.CreateToken(user)
+            };
+        }
+
         public async Task<LoginResponse> Login(string email, string password)
         {
             var appUser = await _userManager.FindByEmailAsync(email);
@@ -34,7 +49,7 @@ namespace BloodDonorTracker.Repository.Identity
 
             var key = _token.CreateToken(appUser);
 
-            return new LoginResponse { Token = key };
+            return new LoginResponse { Email = appUser.Email, UserName = appUser.UserName, Token = key };
         }
 
         public async Task<ResponseMessage> RegisterUser(RegisterDTO user)
