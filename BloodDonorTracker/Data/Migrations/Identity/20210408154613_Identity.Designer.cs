@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloodDonorTracker.Data.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20210326100433_IdentityMG")]
-    partial class IdentityMG
+    [Migration("20210408154613_Identity")]
+    partial class Identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
