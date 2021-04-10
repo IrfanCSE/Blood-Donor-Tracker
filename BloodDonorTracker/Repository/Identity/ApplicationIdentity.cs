@@ -37,6 +37,18 @@ namespace BloodDonorTracker.Repository.Identity
             };
         }
 
+        public async Task<bool> GetEmailExist(string email)
+        {
+            try
+            {
+                return await _userManager.FindByEmailAsync(email) != null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<LoginResponse> Login(string email, string password)
         {
             var appUser = await _userManager.FindByEmailAsync(email);

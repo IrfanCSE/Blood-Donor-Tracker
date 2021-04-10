@@ -52,5 +52,11 @@ namespace BloodDonorTracker.Controllers
             var claim = HttpContext.User;
             return Ok(await _Repository.GetCurrentUser(claim));
         }
+
+        [HttpGet("emailExists")]
+        public async Task<ActionResult<bool>> EmailExist(string email)
+        {
+            return Ok(await _Repository.GetEmailExist(email));
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace BloodDonorTracker.iRepository.Identity
         public Task<ResponseMessage> RegisterUser(RegisterDTO user);
         public Task<LoginResponse> Login(string email, string password);
         public Task<LoginResponse> GetCurrentUser(ClaimsPrincipal claims);
+        public Task<bool> GetEmailExist(string email);
     }
 }
