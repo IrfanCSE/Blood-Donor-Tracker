@@ -32,6 +32,7 @@ namespace BloodDonorTracker.Repository.Identity
             return new LoginResponse
             {
                 UserName = user.UserName,
+                UserId=user.Id,
                 Email = user.Email,
                 Token = _token.CreateToken(user)
             };
@@ -61,7 +62,7 @@ namespace BloodDonorTracker.Repository.Identity
 
             var key = _token.CreateToken(appUser);
 
-            return new LoginResponse { Email = appUser.Email, UserName = appUser.UserName, Token = key };
+            return new LoginResponse { Email = appUser.Email, UserId=appUser.Id, UserName = appUser.UserName, Token = key };
         }
 
         public async Task<ResponseMessage> RegisterUser(RegisterDTO user)

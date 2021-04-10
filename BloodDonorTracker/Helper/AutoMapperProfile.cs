@@ -1,4 +1,5 @@
 using AutoMapper;
+using BloodDonorTracker.DTOs.Donor;
 
 namespace BloodDonorTracker.Helper
 {
@@ -6,6 +7,8 @@ namespace BloodDonorTracker.Helper
     {
         public AutoMapperProfile()
         {
+            CreateMap<CreateDonorInfoDTO, Models.Donor>().ReverseMap();
+            CreateMap<GetDonorDTO, Models.Donor>().ReverseMap();
         }
     }
 }

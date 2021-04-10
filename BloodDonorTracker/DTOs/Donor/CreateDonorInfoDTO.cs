@@ -1,8 +1,7 @@
 namespace BloodDonorTracker.DTOs.Donor
 {
-    public class GetDonorDTO
+    public class CreateDonorInfoDTO
     {
-        public long DonorIdPk { get; set; }
         public string UserIdFk { get; set; }
         public string Name { get; set; }
         public string NID { get; set; }
@@ -10,6 +9,5 @@ namespace BloodDonorTracker.DTOs.Donor
         public string Address { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
-        public bool IsActive { get; set; }
     }
 }
