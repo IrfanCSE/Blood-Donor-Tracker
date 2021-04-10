@@ -6,8 +6,6 @@ namespace BloodDonorTracker.Models
     {
         public long DonorIdPk { get; set; }
         public string UserIdFk { get; set; }
-        public AppUser UserFk { get; set; }
-        public long HealthReportFk { get; set; }
         public HealthReport HealthReportNav { get; set; }
         public string Name { get; set; }
         public string NID { get; set; }
@@ -16,6 +14,6 @@ namespace BloodDonorTracker.Models
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public bool IsActive { get; set; }
-        public List<BloodRequest> BloodRequests { get; set; }
+        public List<Alert> Alerts { get; set; }
     }
 }

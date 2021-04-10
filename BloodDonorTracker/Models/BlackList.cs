@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BloodDonorTracker.Models
 {
@@ -6,7 +7,8 @@ namespace BloodDonorTracker.Models
     {
         public long BlackListIdPk { get; set; }
         public long DonorIdFk { get; set; }
-        public Donor DonorNav { get; set; }
+        
+        [DataType(DataType.Date)]
         public DateTime ActionDateTime { get; set; }
         public bool IsActive { get; set; }
     }
