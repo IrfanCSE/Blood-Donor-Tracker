@@ -37,13 +37,13 @@ namespace BloodDonorTracker.Repository.Donor
                     info.Name = donor.Name;
                     info.NID = donor.NID;
 
-                    _context.Update(info);
+                    _context.Donors.Update(info);
                 }
                 else
                 {
                     info = _mapper.Map<Models.Donor>(donor);
 
-                    await _context.AddAsync(info);
+                    await _context.Donors.AddAsync(info);
                 }
 
                 var response = await _context.SaveChangesAsync();

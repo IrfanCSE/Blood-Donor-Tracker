@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using BloodDonorTracker.DTOs.Donor;
+using BloodDonorTracker.iRepository.Donor;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -10,13 +12,34 @@ namespace BloodDonorTracker.Controllers
     [Authorize]
     public class DonorController : ControllerBase
     {
-        [HttpGet]
-        [Route("GetAuthData")]
-        [SwaggerOperation(Description = "Example {  }")]
-        public async Task<IActionResult> GetAuthData()
+        private readonly IDonor _repository;
+        public DonorController(IDonor repository)
         {
-            var data = "Auth Success";
-            return Ok(data);
+            _repository = repository;
+        }
+
+        [HttpGet]
+        [Route("GetDonorById")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> GetDonorById(string userId)
+        {
+            return Ok(await _repository.GetDonorById(userId));
+        }
+
+        [HttpPost]
+        [Route("PostDonorInfo")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> PostDonorInfo(CreateDonorInfoDTO info)
+        {
+            return Ok(await _repository.CreateDonor(info));
+        }
+
+        [HttpPut]
+        [Route("UpdateLocation")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> UpdateLocation(long donorId, double Longitude, double Latitude)
+        {
+            return Ok(await _repository.UpdateLocation(donorId, Longitude, Latitude));
         }
     }
 }
