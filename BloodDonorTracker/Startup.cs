@@ -60,7 +60,7 @@ namespace BloodDonorTracker
             });
             #endregion
 
-            app.UseCors('CorsPolicy');
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
             app.UseAuthorization();
