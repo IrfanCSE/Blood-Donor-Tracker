@@ -14,6 +14,9 @@ namespace BloodDonorTracker.Models
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public bool IsActive { get; set; }
-        public List<Alert> Alerts { get; set; }
+        public ICollection<BloodRequest> BloodRequests { get; set; }
+        public ICollection<BloodRequest> BloodResponsedRequests { get; set; }
+        public Admin Admin { get; set; }
+        public BlackList BlackList { get; set; }
     }
 }

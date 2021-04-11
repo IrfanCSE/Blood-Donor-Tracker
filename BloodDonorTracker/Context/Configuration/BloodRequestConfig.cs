@@ -8,7 +8,7 @@ namespace BloodDonorTracker.Context.Configuration
     {
         public void Configure(EntityTypeBuilder<BloodRequest> builder)
         {
-            builder.HasKey(x=>x.BloodRequestIdPk);
+            builder.HasKey(x => x.BloodRequestIdPk);
 
             builder.Property(x => x.BloodRequestIdPk)
                 .UseIdentityColumn()
@@ -18,6 +18,18 @@ namespace BloodDonorTracker.Context.Configuration
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .IsRequired(false);
+
+            builder.HasOne(x => x.RequestDonorNav)
+                .WithMany(x => x.BloodRequests)
+                .HasForeignKey(x => x.RequestDonorFk)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
+
+            builder.HasOne(x => x.ResponsedDonorNav)
+                .WithMany(x => x.BloodResponsedRequests)
+                .HasForeignKey(x => x.ResponsedDonorFk)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false); 
         }
     }
 }

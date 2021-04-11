@@ -8,7 +8,7 @@ namespace BloodDonorTracker.Context.Configuration
     {
         public void Configure(EntityTypeBuilder<BlackList> builder)
         {
-            builder.HasKey(x=>x.BlackListIdPk);
+            builder.HasKey(x => x.BlackListIdPk);
 
             builder.Property(x => x.BlackListIdPk)
                 .UseIdentityColumn()
@@ -16,6 +16,7 @@ namespace BloodDonorTracker.Context.Configuration
 
             builder.Property(X => X.IsActive).IsRequired();
 
+            builder.HasOne(x => x.DonorIdNav).WithOne(x => x.BlackList).HasForeignKey<BlackList>(x => x.DonorIdFk).IsRequired(false);
         }
     }
 }

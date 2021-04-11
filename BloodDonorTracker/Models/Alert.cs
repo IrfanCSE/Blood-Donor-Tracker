@@ -6,8 +6,8 @@ namespace BloodDonorTracker.Models
     public class Alert
     {
         public long Id { get; set; }
-        public long DonorIdFk { get; set; }
-        public Donor DonorNav { get; set; }
+        public long RequestIdFk { get; set; }
+        public BloodRequest RequestIdNav { get; set; }
         
         [DataType(DataType.Date)]
         public DateTime DateOfDonation { get; set; }

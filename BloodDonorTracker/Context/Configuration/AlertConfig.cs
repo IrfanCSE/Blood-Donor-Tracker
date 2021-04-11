@@ -16,6 +16,7 @@ namespace BloodDonorTracker.Context.Configuration
 
             builder.Property(X => X.IsActive).IsRequired();
 
+            builder.HasOne(x=>x.RequestIdNav).WithOne(x=>x.Alert).HasForeignKey<Alert>(x=>x.RequestIdFk);
         }
     }
 }

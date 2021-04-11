@@ -7,6 +7,7 @@ namespace BloodDonorTracker.Models
     {
         public long BlackListIdPk { get; set; }
         public long DonorIdFk { get; set; }
+        public Donor DonorIdNav { get; set; }
         
         [DataType(DataType.Date)]
         public DateTime ActionDateTime { get; set; }

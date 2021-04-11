@@ -8,7 +8,7 @@ namespace BloodDonorTracker.Context.Configuration
     {
         public void Configure(EntityTypeBuilder<Donor> builder)
         {
-            builder.HasKey(x=>x.DonorIdPk);
+            builder.HasKey(x => x.DonorIdPk);
 
             builder.Property(x => x.DonorIdPk)
                 .UseIdentityColumn()
@@ -39,10 +39,6 @@ namespace BloodDonorTracker.Context.Configuration
 
             builder.Property(x => x.Longitude)
                 .IsRequired();
-
-            builder.HasMany(x => x.Alerts)
-                .WithOne(x => x.DonorNav)
-                .HasForeignKey(x => x.DonorIdFk);
 
             builder.Property(X => X.IsActive).IsRequired();
 
