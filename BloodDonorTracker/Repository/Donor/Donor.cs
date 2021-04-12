@@ -32,8 +32,8 @@ namespace BloodDonorTracker.Repository.Donor
                     info.Address = donor.Address;
                     info.IsActive = true;
                     info.Phone = donor.Phone;
-                    info.Latitude = donor.Latitude;
-                    info.Longitude = donor.Longitude;
+                    // info.Latitude = donor.Latitude;
+                    // info.Longitude = donor.Longitude;
                     info.Name = donor.Name;
                     info.NID = donor.NID;
 
@@ -42,6 +42,8 @@ namespace BloodDonorTracker.Repository.Donor
                 else
                 {
                     info = _mapper.Map<Models.Donor>(donor);
+
+                    info.IsActive = true;
 
                     await _context.Donors.AddAsync(info);
                 }
@@ -64,7 +66,7 @@ namespace BloodDonorTracker.Repository.Donor
             {
                 var data = await _context.Donors.Where(x => x.UserIdFk == userId && x.IsActive == true).FirstOrDefaultAsync();
 
-                if (data == null) throw new Exception("information empty");
+                if (data == null) throw new Exception("please give your information first");
 
                 return _mapper.Map<GetDonorDTO>(data);
             }
@@ -84,6 +86,7 @@ namespace BloodDonorTracker.Repository.Donor
 
                 data.Longitude = Longitude;
                 data.Latitude = Latitude;
+                data.IsActive = true;
 
                 _context.Donors.Update(data);
                 var res = await _context.SaveChangesAsync();

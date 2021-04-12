@@ -9,7 +9,7 @@ namespace BloodDonorTracker.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    // [Authorize]
     public class DonorController : ControllerBase
     {
         private readonly IDonor _repository;
