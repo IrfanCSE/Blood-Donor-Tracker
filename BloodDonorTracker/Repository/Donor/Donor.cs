@@ -76,11 +76,11 @@ namespace BloodDonorTracker.Repository.Donor
             }
         }
 
-        public async Task<ResponseMessage> UpdateLocation(long donorId, double Longitude, double Latitude)
+        public async Task<ResponseMessage> UpdateLocation(string userId, double Longitude, double Latitude)
         {
             try
             {
-                var data = await _context.Donors.Where(x => x.DonorIdPk == donorId && x.IsActive == true).FirstOrDefaultAsync();
+                var data = await _context.Donors.Where(x => x.UserIdFk == userId && x.IsActive == true).FirstOrDefaultAsync();
 
                 if (data == null) throw new Exception("donor not found");
 

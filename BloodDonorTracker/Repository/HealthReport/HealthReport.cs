@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BloodDonorTracker.Context;
+using BloodDonorTracker.DTOs.DDL;
 using BloodDonorTracker.DTOs.HealthReport;
 using BloodDonorTracker.Helper;
 using BloodDonorTracker.iRepository.HealthReport;
@@ -55,7 +57,8 @@ namespace BloodDonorTracker.Repository.HealthReport
                 }
                 else
                 {
-                    info = _mapper.Map<Models.HealthReport>(info);
+                    info = _mapper.Map<Models.HealthReport>(report);
+                    info.IsActive = true;
 
                     await _context.HealthReports.AddAsync(info);
                 }
@@ -65,6 +68,22 @@ namespace BloodDonorTracker.Repository.HealthReport
                 if (response == 0) throw new Exception("process failed");
 
                 return new ResponseMessage("information saved");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<GetCommonDDLDTO>> GetBloodGroups()
+        {
+            try
+            {
+                return await _context.BloodGroups.Select(x => new GetCommonDDLDTO
+                {
+                    Label = x.BloodGroupName,
+                    Value = x.BloodGroupIdPk
+                }).ToListAsync();
             }
             catch (Exception ex)
             {

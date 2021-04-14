@@ -8,6 +8,6 @@ namespace BloodDonorTracker.iRepository.Donor
     {
         public Task<GetDonorDTO> GetDonorById(string userId);
         public Task<ResponseMessage> CreateDonor(CreateDonorInfoDTO donor);
-        public Task<ResponseMessage> UpdateLocation(long donorId, double Longitude,double Latitude);
+        public Task<ResponseMessage> UpdateLocation(string userId, double Longitude,double Latitude);
     }
 }

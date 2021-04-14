@@ -9,7 +9,7 @@ namespace BloodDonorTracker.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    // [Authorize]
     public class HealthReportController : ControllerBase
     {
         private readonly IHealthReport _repository;
@@ -32,6 +32,14 @@ namespace BloodDonorTracker.Controllers
         public async Task<IActionResult> PostHealthReport(CreateHealthReportDTO report)
         {
             return Ok(await _repository.CreateHealthReport(report));
+        }
+
+        [HttpGet]
+        [Route("GetBloodGroups")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> GetBloodGroups()
+        {
+            return Ok(await _repository.GetBloodGroups());
         }
     }
 }

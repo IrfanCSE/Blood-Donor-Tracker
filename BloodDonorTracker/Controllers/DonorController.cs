@@ -9,7 +9,7 @@ namespace BloodDonorTracker.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    // [Authorize]
+    [Authorize]
     public class DonorController : ControllerBase
     {
         private readonly IDonor _repository;
@@ -37,9 +37,9 @@ namespace BloodDonorTracker.Controllers
         [HttpPut]
         [Route("UpdateLocation")]
         [SwaggerOperation(Description = "Example {  }")]
-        public async Task<IActionResult> UpdateLocation(long donorId, double Longitude, double Latitude)
+        public async Task<IActionResult> UpdateLocation(string userId, double Longitude, double Latitude)
         {
-            return Ok(await _repository.UpdateLocation(donorId, Longitude, Latitude));
+            return Ok(await _repository.UpdateLocation(userId, Longitude, Latitude));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace BloodDonorTracker.Helper
             CreateMap<CreateDonorInfoDTO, Models.Donor>().ReverseMap();
             CreateMap<GetDonorDTO, Models.Donor>().ReverseMap();
             CreateMap<GetHealthReportDTO, HealthReport>().ReverseMap();
+            CreateMap<CreateHealthReportDTO, HealthReport>().ReverseMap();
         }
     }
 }
