@@ -1,7 +1,9 @@
 using BloodDonorTracker.Helper;
+using BloodDonorTracker.iRepository.Blood;
 using BloodDonorTracker.iRepository.Donor;
 using BloodDonorTracker.iRepository.HealthReport;
 using BloodDonorTracker.iRepository.Identity;
+using BloodDonorTracker.Repository.Blood;
 using BloodDonorTracker.Repository.Donor;
 using BloodDonorTracker.Repository.HealthReport;
 using BloodDonorTracker.Repository.Identity;
@@ -17,6 +19,7 @@ namespace BloodDonorTracker.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IDonor, Donor>();
             services.AddScoped<IHealthReport, HealthReport>();
+            services.AddScoped<IBlood, Blood>();
         }
         public static void ApplicationServices(this IServiceCollection services)
         {

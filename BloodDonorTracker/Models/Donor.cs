@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BloodDonorTracker.Models
 {
@@ -18,5 +19,7 @@ namespace BloodDonorTracker.Models
         public ICollection<BloodRequest> BloodResponsedRequests { get; set; }
         public Admin Admin { get; set; }
         public BlackList BlackList { get; set; }
+
+        public double? Distance { get; set; }
     }
 }
