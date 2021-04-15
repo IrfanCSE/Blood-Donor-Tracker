@@ -19,9 +19,9 @@ namespace BloodDonorTracker.Controllers
         [HttpGet]
         [Route("GetLanding")]
         [SwaggerOperation(Description = "Example {  }")]
-        public async Task<IActionResult> GetLanding(double Latitude, double Longitude,long pageNumber,long PageSize)
+        public async Task<IActionResult> GetLanding(string userId,long pageNumber,long PageSize)
         {
-            return Ok(await _repository.GetLanding(Latitude, Longitude,pageNumber,PageSize));
+            return Ok(await _repository.GetLanding(userId,pageNumber,PageSize));
         }
     }
 }

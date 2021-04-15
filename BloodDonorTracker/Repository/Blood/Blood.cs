@@ -23,19 +23,23 @@ namespace BloodDonorTracker.Repository.Blood
             _context = context;
         }
 
-        public async Task<PaginationDTO<GetBloodDonor>> GetLanding(double FromLat, double FromLong, long pageNumber, long PageSize)
+        public async Task<PaginationDTO<GetBloodDonor>> GetLanding(string userId, long pageNumber, long PageSize)
         {
             try
             {
+                var donor = await _context.Donors.Where(x => x.UserIdFk == userId).FirstOrDefaultAsync();
+
+                if (donor == null) throw new Exception("Donor Not Found");
+
                 var data = _context.Donors
                     .Include(x => x.HealthReportNav.BloodGroupNav)
-                    .Where(x => x.IsActive == true && x.HealthReportNav.IsAvailable == true);
+                    .Where(x => x.IsActive == true && x.HealthReportNav.IsAvailable == true && x.UserIdFk != donor.UserIdFk);
 
                 if (data == null) throw new Exception("No Data Found");
 
                 foreach (var item in data)
                 {
-                    item.Distance = DistanceTracker.Calculate(FromLat, FromLong, item.Latitude, item.Longitude, DistanceType.Metres);
+                    item.Distance = DistanceTracker.Calculate(donor.Latitude, donor.Longitude, item.Latitude, item.Longitude, DistanceType.Metres);
                 }
 
                 var count = data.Count();

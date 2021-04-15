@@ -8,6 +8,6 @@ namespace BloodDonorTracker.iRepository.Blood
     public interface IBlood
     {
         // public Task<ResponseMessage> GetLanding(double FromLat, double FromLong);
-        public Task<PaginationDTO<GetBloodDonor>> GetLanding(double FromLat, double FromLong,long pageNumber,long PageSize);
+        public Task<PaginationDTO<GetBloodDonor>> GetLanding(string userId,long pageNumber,long PageSize);
     }
 }
