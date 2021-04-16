@@ -26,7 +26,7 @@ namespace BloodDonorTracker.Repository.HealthReport
         {
             try
             {
-                var info = await _context.HealthReports.Where(x => x.DonorIdFk == donorId && x.IsActive == true).FirstOrDefaultAsync();
+                var info = await _context.HealthReports.Include(x=>x.DonorNav).Include(x=>x.BloodGroupNav).Where(x => x.DonorIdFk == donorId && x.IsActive == true).FirstOrDefaultAsync();
 
                 if (info == null) throw new Exception("information empty");
 

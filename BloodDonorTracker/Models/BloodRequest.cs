@@ -10,14 +10,17 @@ namespace BloodDonorTracker.Models
         public Donor RequestDonorNav { get; set; }
         public long? ResponsedDonorFk { get; set; }
         public Donor ResponsedDonorNav { get; set; }
-        
+        public long BloodGroupFK { get; set; }
+        public BloodGroup BloodGroupNav { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime DonationDate { get; set; }
-        
+
         [DataType(DataType.Time)]
         public DateTime Time { get; set; }
 
         public string Condition { get; set; }
+        public bool? IsResponsed { get; set; }
         public bool IsActive { get; set; }
         public Alert Alert { get; set; }
     }

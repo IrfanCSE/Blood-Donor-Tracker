@@ -7,5 +7,6 @@ namespace BloodDonorTracker.Models
         public long BloodGroupIdPk { get; set; }
         public string BloodGroupName { get; set; }
         public List<HealthReport> HealthReports { get; set; }
+        public List<BloodRequest> BloodRequests { get; set; }
     }
 }

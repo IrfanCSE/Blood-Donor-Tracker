@@ -29,7 +29,13 @@ namespace BloodDonorTracker.Context.Configuration
                 .WithMany(x => x.BloodResponsedRequests)
                 .HasForeignKey(x => x.ResponsedDonorFk)
                 .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired(false); 
+                .IsRequired(false);
+
+            builder.HasOne(x => x.BloodGroupNav)
+                .WithMany(x => x.BloodRequests)
+                .HasForeignKey(x => x.BloodGroupFK)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
         }
     }
 }
