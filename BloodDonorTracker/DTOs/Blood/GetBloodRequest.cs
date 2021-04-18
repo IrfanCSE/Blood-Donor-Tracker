@@ -16,5 +16,10 @@ namespace BloodDonorTracker.DTOs.Blood
         public string Condition { get; set; }
         public bool IsResponsed { get; set; }
         public bool IsActive { get; set; }
+
+        public string Address { get; set; }
+        public double? Longitude { get; set; }
+        public double? Latitude { get; set; }
+        public long? Distance { get; set; }
     }
 }
