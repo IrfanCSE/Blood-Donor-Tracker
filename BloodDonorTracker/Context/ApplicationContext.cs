@@ -17,6 +17,7 @@ namespace BloodDonorTracker.Context
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<BlackList> BlackLists { get; set; }
         public DbSet<Alert> Alerts { get; set; }
+        public DbSet<DonorRequest> DonorRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

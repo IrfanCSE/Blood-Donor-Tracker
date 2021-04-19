@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BloodDonorTracker.Models
@@ -26,5 +27,6 @@ namespace BloodDonorTracker.Models
         public bool? IsResponsed { get; set; }
         public bool IsActive { get; set; }
         public Alert Alert { get; set; }
+        public List<DonorRequest> DonorRequests { get; set; }
     }
 }
