@@ -25,10 +25,10 @@ namespace BloodDonorTracker.Extensions
         {
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
-            services.AddCors(opt =>
-                opt.AddPolicy("CorsPolicy",
-                    policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
-            );
+            // services.AddCors(opt =>
+            //     opt.AddPolicy("CorsPolicy",
+            //         policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
+            // );
         }
     }
 }

@@ -95,7 +95,7 @@ namespace BloodDonorTracker.Repository.Blood
 
                 var donorList = data.AsEnumerable().OrderBy(x => x.Distance).AsQueryable();
 
-                pageNumber = pageNumber == 0 ? 1 : pageNumber;
+                pageNumber = pageNumber + 1;
                 PageSize = PageSize == 0 ? 5 : PageSize;
 
                 var newdata = Pagination<Models.Donor>.Proccess(PageSize, pageNumber, donorList);
@@ -308,7 +308,7 @@ namespace BloodDonorTracker.Repository.Blood
                 if (data == null) throw new Exception("you didn't make any request yet");
 
                 var count = await data.CountAsync();
-                pageNumber = pageNumber == 0 ? 1 : pageNumber;
+                pageNumber = pageNumber + 1;
                 PageSize = PageSize == 0 ? 5 : PageSize;
 
                 var pagingData = Pagination<BloodRequest>.Proccess(PageSize, pageNumber, data);
@@ -340,7 +340,7 @@ namespace BloodDonorTracker.Repository.Blood
                 var data = _context.BloodRequests.Include(x => x.BloodGroupNav).Include(x => x.RequestDonorNav).Where(x => x.ResponsedDonorFk == responsed.DonorIdPk).OrderByDescending(x => x.BloodRequestIdPk);
 
                 var count = await data.CountAsync();
-                pageNumber = pageNumber == 0 ? 1 : pageNumber;
+                pageNumber = pageNumber + 1;
                 PageSize = PageSize == 0 ? 5 : PageSize;
 
                 var pagingData = Pagination<BloodRequest>.Proccess(PageSize, pageNumber, data);
@@ -388,7 +388,7 @@ namespace BloodDonorTracker.Repository.Blood
 
 
                 var count = await data.CountAsync();
-                pageNumber = pageNumber == 0 ? 1 : pageNumber;
+                pageNumber = pageNumber + 1;
                 PageSize = PageSize == 0 ? 5 : PageSize;
 
                 var pagingData = Pagination<BloodRequest>.Proccess(PageSize, pageNumber, donorList);
