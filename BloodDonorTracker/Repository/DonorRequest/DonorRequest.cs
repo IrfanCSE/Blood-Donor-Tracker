@@ -126,6 +126,7 @@ namespace BloodDonorTracker.Repository.DonorRequest
                 var data = _mapper.Map<Models.DonorRequest>(obj);
 
                 data.isActive = true;
+                data.isRead = false;
                 data.RequestDateTime = DateTime.Now;
 
                 await _context.DonorRequests.AddAsync(data);

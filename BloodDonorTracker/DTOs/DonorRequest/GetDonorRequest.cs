@@ -17,5 +17,6 @@ namespace BloodDonorTracker.DTOs.DonorRequest
         public bool? isAccept { get; set; }
         public bool? isResponse { get; set; }
         public DateTime RequestDateTime { get; set; }
+        public DateTime RequestTime { get; set; }
     }
 }

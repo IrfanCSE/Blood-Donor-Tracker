@@ -33,6 +33,8 @@ namespace BloodDonorTracker.Helper
 
             CreateMap<CreateDonorRequest, Models.DonorRequest>();
             CreateMap<DonorRequest, GetDonorRequest>()
+                .ForMember(des => des.RequestDateTime, opt => opt.MapFrom(src => src.BloodRequestIdNav.DonationDate))
+                .ForMember(des => des.RequestTime, opt => opt.MapFrom(src => src.BloodRequestIdNav.Time))
                 .ForMember(des => des.RequestUserName, opt => opt.MapFrom(src => src.RequestUserIdNav.Name))
                 .ForMember(des => des.RequestDonorName, opt => opt.MapFrom(src => src.RequestDonorIdNav.Name))
                 .ForMember(des => des.BloodGroup, opt => opt.MapFrom(src => src.BloodRequestIdNav.BloodGroupNav.BloodGroupName));

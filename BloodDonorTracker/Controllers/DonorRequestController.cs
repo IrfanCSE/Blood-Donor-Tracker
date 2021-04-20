@@ -6,6 +6,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace BloodDonorTracker.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class DonorRequestController : ControllerBase
     {
         private readonly IDonorRequest _repository;
