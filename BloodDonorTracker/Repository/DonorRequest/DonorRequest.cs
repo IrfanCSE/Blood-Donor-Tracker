@@ -4,11 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BloodDonorTracker.Context;
-using BloodDonorTracker.DTOs.Blood;
 using BloodDonorTracker.DTOs.DonorRequest;
 using BloodDonorTracker.Helper;
 using BloodDonorTracker.iRepository.DonorRequest;
-using BloodDonorTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BloodDonorTracker.Repository.DonorRequest
@@ -16,9 +14,9 @@ namespace BloodDonorTracker.Repository.DonorRequest
     public class DonorRequest : IDonorRequest
     {
         private readonly ApplicationContext _context;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
 
-        public DonorRequest(ApplicationContext context, Mapper mapper)
+        public DonorRequest(ApplicationContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
@@ -52,6 +50,24 @@ namespace BloodDonorTracker.Repository.DonorRequest
             }
         }
 
+        public async Task CancelDonorRequest(long DonorRequestId)
+        {
+            try
+            {
+                var data = await _context.DonorRequests.Where(x => x.DonorRequestIdPk == DonorRequestId).FirstOrDefaultAsync();
+
+                if (data == null) throw new Exception("Data Not Found");
+
+                data.isActive = false;
+                _context.DonorRequests.Update(data);
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<GetDonorRequest> GetDonorRequestById(long DonorRequestId)
         {
             try
@@ -62,6 +78,8 @@ namespace BloodDonorTracker.Repository.DonorRequest
                     .Include(x => x.RequestDonorIdNav)
                     .Where(x => x.DonorRequestIdPk == DonorRequestId)
                     .FirstOrDefaultAsync();
+
+                if (data == null) throw new Exception("Data Not Found");
 
                 return _mapper.Map<GetDonorRequest>(data);
             }
@@ -97,6 +115,14 @@ namespace BloodDonorTracker.Repository.DonorRequest
 
                 if (exist != null) throw new Exception("already send this request");
 
+                var req = await _context.BloodRequests.Where(x => x.BloodRequestIdPk == obj.BloodRequestIdFk && x.IsActive == true && x.IsResponsed == false).FirstOrDefaultAsync();
+                if (req == null) throw new Exception("there is no request, or someone responsed");
+
+                var donor = await _context.Donors.Include(x => x.HealthReportNav).Where(x => x.DonorIdPk == obj.RequestDonorIdFk).FirstOrDefaultAsync();
+
+                var match = Blood.Blood.IsBloodMatch(donor.HealthReportNav.BloodGroupIdFk, req.BloodGroupFK);
+                if (!match) throw new Exception("blood group not matched!");
+
                 var data = _mapper.Map<Models.DonorRequest>(obj);
 
                 data.isActive = true;
@@ -120,6 +146,9 @@ namespace BloodDonorTracker.Repository.DonorRequest
             try
             {
                 var data = await _context.DonorRequests.Where(x => x.DonorRequestIdPk == DonorRequest).FirstOrDefaultAsync();
+
+                if (data == null) throw new Exception("Data Not Found");
+
                 data.isRead = true;
                 _context.DonorRequests.Update(data);
                 await _context.SaveChangesAsync();

@@ -11,6 +11,7 @@ namespace BloodDonorTracker.iRepository.DonorRequest
         public Task<List<GetDonorRequest>> GetDonorRequests(long DonorId);
         public Task<GetDonorRequest> GetDonorRequestById(long DonorRequestId);
         public Task UpdateIsRead(long DonorRequest);
+        public Task CancelDonorRequest(long DonorRequestId);
         public Task<ResponseMessage> AcceptOrDeclain(long DonorRequestId,long DonorId, bool Status);
     }
 }

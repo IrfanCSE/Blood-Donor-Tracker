@@ -237,7 +237,7 @@ namespace BloodDonorTracker.Repository.Blood
             }
         }
 
-        public bool IsBloodMatch(long DonorBloodType, long SeekerBloodType)
+        public static bool IsBloodMatch(long DonorBloodType, long SeekerBloodType)
         {
             /*
             Determin that, Blood Type and there default value are :
