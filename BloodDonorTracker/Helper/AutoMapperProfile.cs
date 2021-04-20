@@ -1,6 +1,7 @@
 using AutoMapper;
 using BloodDonorTracker.DTOs.Blood;
 using BloodDonorTracker.DTOs.Donor;
+using BloodDonorTracker.DTOs.DonorRequest;
 using BloodDonorTracker.DTOs.HealthReport;
 using BloodDonorTracker.Models;
 
@@ -15,7 +16,7 @@ namespace BloodDonorTracker.Helper
             CreateMap<HealthReport, GetHealthReportDTO>()
                 .ForMember(des => des.BloodGroup, opt => opt.MapFrom(src => src.BloodGroupNav.BloodGroupName))
                 .ForMember(des => des.Donor, opt => opt.MapFrom(src => src.DonorNav.Name));
-                
+
             CreateMap<CreateHealthReportDTO, HealthReport>().ReverseMap();
             CreateMap<Donor, GetBloodDonor>()
                 .ForMember(des => des.HealthReportIdPk, opt => opt.MapFrom(src => src.HealthReportNav.HealthReportIdPk))
@@ -29,6 +30,12 @@ namespace BloodDonorTracker.Helper
                 .ForMember(des => des.BloodGroupName, opt => opt.MapFrom(src => src.BloodGroupNav.BloodGroupName))
                 .ForMember(des => des.RequestDonorName, opt => opt.MapFrom(src => src.RequestDonorNav.Name))
                 .ForMember(des => des.ResponsedDonorName, opt => opt.MapFrom(src => src.ResponsedDonorNav.Name));
+
+            CreateMap<CreateDonorRequest, Models.DonorRequest>();
+            CreateMap<DonorRequest, GetDonorRequest>()
+                .ForMember(des => des.RequestUserName, opt => opt.MapFrom(src => src.RequestUserIdNav.Name))
+                .ForMember(des => des.RequestDonorName, opt => opt.MapFrom(src => src.RequestDonorIdNav.Name))
+                .ForMember(des => des.BloodGroup, opt => opt.MapFrom(src => src.BloodRequestIdNav.BloodGroupNav.BloodGroupName));
         }
     }
 }

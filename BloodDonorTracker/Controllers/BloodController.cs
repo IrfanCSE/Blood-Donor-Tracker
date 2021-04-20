@@ -97,15 +97,5 @@ namespace BloodDonorTracker.Controllers
         {
             return Ok(await _repository.RemoveResponseOnBloodRequest(BloodRequestIdPk));
         }
-
-        [HttpGet]
-        [Route("getDate")]
-        [SwaggerOperation(Description = "Example {  }")]
-        public async Task<IActionResult> getDate(string time)
-        {
-            var data = Convert.ToDateTime(time);
-            return Ok(data);
-        }
-
     }
 }
