@@ -11,5 +11,6 @@ namespace BloodDonorTracker.DTOs.Donor
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public bool IsActive { get; set; }
+        public bool IsLocationUpdateAuto { get; set; }
     }
 }

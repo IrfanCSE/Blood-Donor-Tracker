@@ -89,6 +89,15 @@ namespace BloodDonorTracker.Repository.Blood
                 foreach (var item in data)
                 {
                     item.Distance = DistanceTracker.Calculate(donor.Latitude, donor.Longitude, item.Latitude, item.Longitude, DistanceType.Metres);
+
+                    string unit = "meter";
+                    double length = 0;
+                    if (item.Distance >= 1000)
+                    {
+                        length = item.Distance.Value / 1000;
+                        unit = "km";
+                    }
+                    item.Address += $" ({length} {unit})";
                 }
 
                 var count = data.Count();
@@ -381,7 +390,14 @@ namespace BloodDonorTracker.Repository.Blood
 
                     item.Distance = DistanceTracker.Calculate(donor.Latitude, donor.Longitude, item.Latitude.Value, item.Longitude.Value, DistanceType.Metres);
 
-                    item.Address += $".[ {item.Distance} meter ]";
+                    string unit = "meter";
+                    double length = 0;
+                    if (item.Distance >= 1000)
+                    {
+                        length = item.Distance.Value / 1000;
+                        unit = "km";
+                    }
+                    item.Address += $" ({length} {unit})";
                 }
 
                 var donorList = data.AsEnumerable().OrderBy(x => x.Distance).AsQueryable();
@@ -402,6 +418,22 @@ namespace BloodDonorTracker.Repository.Blood
                     PageSize = PageSize,
                     Total = count
                 };
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<GetBloodRequest>> GetMyBloodRequest(long donorId)
+        {
+            try
+            {
+                var data = await _context.BloodRequests.Include(x => x.BloodGroupNav).Include(x => x.RequestDonorNav).Include(x => x.ResponsedDonorNav).Where(x => x.RequestDonorNav.DonorIdPk == donorId && x.IsActive == true && x.IsResponsed == false).OrderByDescending(x => x.BloodRequestIdPk).ToListAsync();
+
+                if (data == null) throw new Exception("you didn't make any request yet");
+
+                return _mapper.Map<List<GetBloodRequest>>(data);
             }
             catch (System.Exception ex)
             {

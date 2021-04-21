@@ -41,5 +41,13 @@ namespace BloodDonorTracker.Controllers
         {
             return Ok(await _repository.UpdateLocation(userId, Longitude, Latitude));
         }
+
+        [HttpPut]
+        [Route("UpdateMapMode")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> UpdateMapMode(long DonorId, bool Status)
+        {
+            return Ok(await _repository.UpdateMapMode(DonorId, Status));
+        }
     }
 }

@@ -44,6 +44,7 @@ namespace BloodDonorTracker.Repository.Donor
                     info = _mapper.Map<Models.Donor>(donor);
 
                     info.IsActive = true;
+                    info.IsLocationUpdateAuto = true;
 
                     await _context.Donors.AddAsync(info);
                 }
@@ -94,6 +95,22 @@ namespace BloodDonorTracker.Repository.Donor
                 if (res == 0) throw new Exception("process failled");
 
                 return new ResponseMessage("update location");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<bool> UpdateMapMode(long DonorId, bool Status)
+        {
+            try
+            {
+                var donor = await _context.Donors.Where(x => x.DonorIdPk == DonorId).FirstOrDefaultAsync();
+                donor.IsLocationUpdateAuto = Status;
+                _context.Donors.Update(donor);
+                await _context.SaveChangesAsync();
+                return donor.IsLocationUpdateAuto.Value;
             }
             catch (Exception ex)
             {

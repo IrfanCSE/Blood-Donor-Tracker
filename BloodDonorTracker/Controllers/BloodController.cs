@@ -35,6 +35,14 @@ namespace BloodDonorTracker.Controllers
         }
 
         [HttpGet]
+        [Route("GetMyBloodRequest")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> GetMyBloodRequest(long donorId)
+        {
+            return Ok(await _repository.GetMyBloodRequest(donorId));
+        }
+
+        [HttpGet]
         [Route("GetBloodRequestByUserLanding")]
         [SwaggerOperation(Description = "Example {  }")]
         public async Task<IActionResult> GetBloodRequestByUserLanding(string userId, long pageNumber, long PageSize)
