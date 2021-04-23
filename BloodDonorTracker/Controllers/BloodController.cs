@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using BloodDonorTracker.DTOs.Blood;
 using BloodDonorTracker.iRepository.Blood;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -9,6 +10,7 @@ namespace BloodDonorTracker.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class BloodController : ControllerBase
     {
         private readonly IBlood _repository;

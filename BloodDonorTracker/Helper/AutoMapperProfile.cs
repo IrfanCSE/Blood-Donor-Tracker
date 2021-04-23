@@ -12,7 +12,10 @@ namespace BloodDonorTracker.Helper
         public AutoMapperProfile()
         {
             CreateMap<CreateDonorInfoDTO, Models.Donor>().ReverseMap();
-            CreateMap<GetDonorDTO, Models.Donor>().ReverseMap();
+            CreateMap<Models.Donor, GetDonorDTO>()
+                .ForMember(des => des.BloodGorup, opt => opt.MapFrom(src => src.HealthReportNav.BloodGroupNav.BloodGroupName))
+                .ReverseMap();
+
             CreateMap<HealthReport, GetHealthReportDTO>()
                 .ForMember(des => des.BloodGroup, opt => opt.MapFrom(src => src.BloodGroupNav.BloodGroupName))
                 .ForMember(des => des.Donor, opt => opt.MapFrom(src => src.DonorNav.Name));

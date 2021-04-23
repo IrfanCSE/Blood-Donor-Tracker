@@ -65,7 +65,7 @@ namespace BloodDonorTracker.Repository.Donor
         {
             try
             {
-                var data = await _context.Donors.Where(x => x.UserIdFk == userId && x.IsActive == true).FirstOrDefaultAsync();
+                var data = await _context.Donors.Include(x=>x.HealthReportNav.BloodGroupNav).Where(x => x.UserIdFk == userId && x.IsActive == true).FirstOrDefaultAsync();
 
                 if (data == null) throw new Exception("please give your information first");
 

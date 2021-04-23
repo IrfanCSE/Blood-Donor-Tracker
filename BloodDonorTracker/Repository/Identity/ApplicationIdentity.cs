@@ -32,8 +32,11 @@ namespace BloodDonorTracker.Repository.Identity
             return new LoginResponse
             {
                 UserName = user.UserName,
-                UserId=user.Id,
+                UserId = user.Id,
                 Email = user.Email,
+                Birthday = user.DateOfBirth,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Token = _token.CreateToken(user)
             };
         }
@@ -62,7 +65,36 @@ namespace BloodDonorTracker.Repository.Identity
 
             var key = _token.CreateToken(appUser);
 
-            return new LoginResponse { Email = appUser.Email, UserId=appUser.Id, UserName = appUser.UserName, Token = key };
+            return new LoginResponse
+            {
+                Email = appUser.Email,
+                UserId = appUser.Id,
+                UserName = appUser.UserName,
+                Birthday = appUser.DateOfBirth,
+                FirstName = appUser.FirstName,
+                LastName = appUser.LastName,
+                Token = key
+            };
+        }
+
+        public async Task<ResponseMessage> PasswordChange(string userId, string OldPassword, string NewPassword)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+
+                if (user == null) throw new Exception("you are not a valid user");
+
+                var response = await _userManager.ChangePasswordAsync(user, OldPassword, NewPassword);
+
+                if (!response.Succeeded) throw new Exception("Process Failled");
+
+                return new ResponseMessage("Process Success");
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<ResponseMessage> RegisterUser(RegisterDTO user)
@@ -91,6 +123,29 @@ namespace BloodDonorTracker.Repository.Identity
                 return new ResponseMessage("Create Succesfully");
             }
             catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<ResponseMessage> UpdateUser(UpdateUser user)
+        {
+            try
+            {
+                var data = await _userManager.FindByIdAsync(user.UserId);
+
+                if (data == null) throw new Exception("you are not a valid user");
+
+                data.FirstName = user.FirstName;
+                data.LastName = user.LastName;
+                data.DateOfBirth = user.Birthday;
+                var response = await _userManager.UpdateAsync(data);
+
+                if (!response.Succeeded) throw new Exception("Process Failled");
+
+                return new ResponseMessage("Process Success");
+            }
+            catch (System.Exception ex)
             {
                 throw ex;
             }

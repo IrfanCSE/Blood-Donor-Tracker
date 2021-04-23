@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BloodDonorTracker.Context;
+using BloodDonorTracker.DTOs;
 using BloodDonorTracker.DTOs.DonorRequest;
 using BloodDonorTracker.Helper;
 using BloodDonorTracker.iRepository.DonorRequest;
@@ -68,6 +69,11 @@ namespace BloodDonorTracker.Repository.DonorRequest
             }
         }
 
+        public async Task<long> CountOfNotRead(long DonorRequest)
+        {
+            return await _context.DonorRequests.Where(x => x.RequestDonorIdFk == DonorRequest && x.isActive == true && x.isRead == false).CountAsync();
+        }
+
         public async Task<GetDonorRequest> GetDonorRequestById(long DonorRequestId)
         {
             try
@@ -97,9 +103,43 @@ namespace BloodDonorTracker.Repository.DonorRequest
                     .Include(x => x.RequestUserIdNav)
                     .Include(x => x.RequestDonorIdNav)
                     .Include(x => x.BloodRequestIdNav.BloodGroupNav)
-                    .Where(x => x.RequestDonorIdFk == DonorId && x.isActive == true).ToListAsync();
+                    .Where(x => x.RequestDonorIdFk == DonorId && x.isActive == true)
+                    .OrderByDescending(x => x.DonorRequestIdPk)
+                    .ToListAsync();
 
                 return _mapper.Map<List<GetDonorRequest>>(data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<PaginationDTO<GetDonorRequest>> GetDonorSendRequests(long DonorId, long pageNumber, long PageSize)
+        {
+            try
+            {
+                var data = _context.DonorRequests
+                    .Include(x => x.RequestUserIdNav)
+                    .Include(x => x.RequestDonorIdNav)
+                    .Include(x => x.BloodRequestIdNav.BloodGroupNav)
+                    .Where(x => x.RequestUserIdFk == DonorId);
+
+                var count = await data.CountAsync();
+                pageNumber = pageNumber + 1;
+                PageSize = PageSize == 0 ? 5 : PageSize;
+
+                var pagingData = Pagination<Models.DonorRequest>.Proccess(PageSize, pageNumber, data);
+
+                var mapData = _mapper.Map<List<GetDonorRequest>>(pagingData);
+
+                return new PaginationDTO<GetDonorRequest>
+                {
+                    Data = mapData,
+                    PageNumber = pageNumber,
+                    PageSize = PageSize,
+                    Total = count
+                };
             }
             catch (Exception ex)
             {

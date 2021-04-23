@@ -1,12 +1,14 @@
 using System.Threading.Tasks;
 using BloodDonorTracker.DTOs.DonorRequest;
 using BloodDonorTracker.iRepository.DonorRequest;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace BloodDonorTracker.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class DonorRequestController : ControllerBase
     {
@@ -39,6 +41,22 @@ namespace BloodDonorTracker.Controllers
         public async Task<IActionResult> GetDonorRequests(long DonorId)
         {
             return Ok(await _repository.GetDonorRequests(DonorId));
+        }
+
+        [HttpGet]
+        [Route("GetDonorSendRequests")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> GetDonorSendRequests(long DonorId,long pageNumber, long PageSize)
+        {
+            return Ok(await _repository.GetDonorSendRequests(DonorId,pageNumber,PageSize));
+        }
+
+        [HttpGet]
+        [Route("CountOfNotRead")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> CountOfNotRead(long DonorId)
+        {
+            return Ok(await _repository.CountOfNotRead(DonorId));
         }
 
         [HttpPatch]

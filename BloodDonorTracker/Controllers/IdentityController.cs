@@ -58,5 +58,22 @@ namespace BloodDonorTracker.Controllers
         {
             return Ok(await _Repository.GetEmailExist(email));
         }
+
+        [HttpGet]
+        [Route("PasswordChange")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> PasswordChange(string UserId, string OldPassword, string NewPassword)
+        {
+            return Ok(await _Repository.PasswordChange(UserId, OldPassword, NewPassword));
+        }
+
+        [HttpPut]
+        [Route("UpdateUser")]
+        [Authorize]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> UpdateUser(UpdateUser user)
+        {
+            return Ok(await _Repository.UpdateUser(user));
+        }
     }
 }
