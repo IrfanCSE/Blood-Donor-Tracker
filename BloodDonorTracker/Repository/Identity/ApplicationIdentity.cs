@@ -87,7 +87,7 @@ namespace BloodDonorTracker.Repository.Identity
 
                 var response = await _userManager.ChangePasswordAsync(user, OldPassword, NewPassword);
 
-                if (!response.Succeeded) throw new Exception("Process Failled");
+                if (!response.Succeeded) throw new Exception("Invalid Information Rejected");
 
                 return new ResponseMessage("Process Success");
             }
