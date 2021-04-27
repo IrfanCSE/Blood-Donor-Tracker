@@ -26,7 +26,7 @@ namespace BloodDonorTracker.Repository.HealthReport
         {
             try
             {
-                var info = await _context.HealthReports.Include(x=>x.DonorNav).Include(x=>x.BloodGroupNav).Where(x => x.DonorIdFk == donorId && x.IsActive == true).FirstOrDefaultAsync();
+                var info = await _context.HealthReports.Include(x => x.DonorNav).Include(x => x.BloodGroupNav).Where(x => x.DonorIdFk == donorId && x.IsActive == true).FirstOrDefaultAsync();
 
                 if (info == null) throw new Exception("information empty");
 
@@ -43,6 +43,10 @@ namespace BloodDonorTracker.Repository.HealthReport
             try
             {
                 if (report == null) throw new Exception("please fill all information");
+
+                var check = await _context.Donors.Where(x => x.DonorIdPk == report.DonorIdFk).FirstOrDefaultAsync();
+
+                if (check == null) throw new Exception("please fill your information first");
 
                 var info = await _context.HealthReports.Where(x => x.DonorIdFk == report.DonorIdFk && x.IsActive == true).FirstOrDefaultAsync();
 

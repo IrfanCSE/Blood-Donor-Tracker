@@ -71,6 +71,8 @@ namespace BloodDonorTracker.Repository.DonorRequest
 
         public async Task<long> CountOfNotRead(long DonorRequest)
         {
+            var check = await _context.Donors.Where(x => x.DonorIdPk == DonorRequest).FirstOrDefaultAsync();
+            if (check == null) return 0;
             return await _context.DonorRequests.Where(x => x.RequestDonorIdFk == DonorRequest && x.isActive == true && x.isRead == false).CountAsync();
         }
 
