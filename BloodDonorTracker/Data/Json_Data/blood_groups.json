@@ -1,0 +1,27 @@
+[
+  {
+    "BloodGroupName": "A RhD positive (A+)"
+  },
+  {
+    "BloodGroupName": "A RhD negative (A-)"
+  },
+  {
+
+    "BloodGroupName": "B RhD positive (B+)"
+  },
+  {
+    "BloodGroupName": "B RhD negative (B-)"
+  },
+  {
+    "BloodGroupName": "O RhD positive (O+)"
+  },
+  {
+    "BloodGroupName": "O RhD negative (O-)"
+  },
+  {
+    "BloodGroupName": "AB RhD positive (AB+)"
+  },
+  {
+    "BloodGroupName": "AB RhD negative (AB-)"
+  }
+]
