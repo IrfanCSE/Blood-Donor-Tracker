@@ -26,6 +26,14 @@ namespace BloodDonorTracker.Controllers
             return Ok(await _repository.GetDonorById(userId));
         }
 
+        [HttpGet]
+        [Route("GetDonorByNumberId")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task<IActionResult> GetDonorByNumberId(long donorId)
+        {
+            return Ok(await _repository.GetDonorByNumberId(donorId));
+        }
+
         [HttpPost]
         [Route("PostDonorInfo")]
         [SwaggerOperation(Description = "Example {  }")]

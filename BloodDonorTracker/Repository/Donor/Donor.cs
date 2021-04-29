@@ -65,9 +65,25 @@ namespace BloodDonorTracker.Repository.Donor
         {
             try
             {
-                var data = await _context.Donors.Include(x=>x.HealthReportNav.BloodGroupNav).Where(x => x.UserIdFk == userId && x.IsActive == true).FirstOrDefaultAsync();
+                var data = await _context.Donors.Include(x => x.HealthReportNav.BloodGroupNav).Where(x => x.UserIdFk == userId && x.IsActive == true).FirstOrDefaultAsync();
 
                 if (data == null) throw new Exception("please give your information first");
+
+                return _mapper.Map<GetDonorDTO>(data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<GetDonorDTO> GetDonorByNumberId(long donorId)
+        {
+            try
+            {
+                var data = await _context.Donors.Include(x => x.HealthReportNav.BloodGroupNav).Where(x => x.DonorIdPk == donorId && x.IsActive == true).FirstOrDefaultAsync();
+
+                if (data == null) throw new Exception("No donor found");
 
                 return _mapper.Map<GetDonorDTO>(data);
             }
