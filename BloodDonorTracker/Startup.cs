@@ -21,13 +21,30 @@ namespace BloodDonorTracker
         public IConfiguration _configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             services.AddControllers();
 
             // Database Connection
             services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<IdentityContext>(options => options.UseSqlServer(_configuration.GetConnectionString("IdentityConnection")));
+
+            // Essential Extention services
+            services.ApplicationServices();
+            services.DependencyInjection();
+            services.AddIdentityServices(_configuration);
+
+            // Register the Swagger generator : Default : services.AddSwaggerGen()
+            services.AddSwaggerGenService();
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddControllers();
+
+            // Database Connection
+            services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(_configuration.GetConnectionString("ProdDefaultConnection")));
+            services.AddDbContext<IdentityContext>(options => options.UseSqlServer(_configuration.GetConnectionString("ProdIdentityConnection")));
 
             // Essential Extention services
             services.ApplicationServices();
