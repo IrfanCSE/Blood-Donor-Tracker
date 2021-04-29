@@ -28,7 +28,7 @@ namespace BloodDonorTracker
                 {
                     var context = service.GetRequiredService<ApplicationContext>();
                     await context.Database.MigrateAsync();
-                    await SeedDataContext.SeedDataAsync(context,loggerFactory);
+                    await SeedDataContext.SeedDataAsync(context, loggerFactory);
 
                     var userManager = service.GetRequiredService<UserManager<AppUser>>();
                     var identityContext = service.GetRequiredService<IdentityContext>();
@@ -38,11 +38,11 @@ namespace BloodDonorTracker
                 catch (Exception ex)
                 {
                     var logger = loggerFactory.CreateLogger<Program>();
-                    logger.LogError("Get An Error While Database Migrating From StartUp",ex);
+                    logger.LogError("Get An Error While Database Migrating From StartUp", ex);
                 }
             }
 
-            host.Run(); 
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

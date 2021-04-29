@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BloodDonorTracker.Context;
+using BloodDonorTracker.Helper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -15,11 +17,11 @@ namespace BloodDonorTracker.Data.Seed_Data
         {
             try
             {
-                // var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var path =Directory.GetCurrentDirectory();
 
                 if (!context.BloodGroups.Any())
                 {
-                    var BloodGroups = File.ReadAllText("../Data/Json_Data/blood_groups.json");
+                    var BloodGroups = File.ReadAllText($"{path}/Data/Json_Data/blood_groups.json");
                     var bloods = JsonConvert.DeserializeObject<List<Models.BloodGroup>>(BloodGroups);
 
                     await context.BloodGroups.AddRangeAsync(bloods);
