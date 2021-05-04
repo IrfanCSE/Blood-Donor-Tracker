@@ -7,7 +7,9 @@ using BloodDonorTracker.Context;
 using BloodDonorTracker.DTOs;
 using BloodDonorTracker.DTOs.DonorRequest;
 using BloodDonorTracker.Helper;
+using BloodDonorTracker.iRepository;
 using BloodDonorTracker.iRepository.DonorRequest;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace BloodDonorTracker.Repository.DonorRequest
@@ -16,9 +18,11 @@ namespace BloodDonorTracker.Repository.DonorRequest
     {
         private readonly ApplicationContext _context;
         private readonly IMapper _mapper;
+        private readonly IHubContext<SignalrHub, IHubClient> _hub;
 
-        public DonorRequest(ApplicationContext context, IMapper mapper)
+        public DonorRequest(ApplicationContext context, IMapper mapper, IHubContext<SignalrHub, IHubClient> hub)
         {
+            _hub = hub;
             _mapper = mapper;
             _context = context;
         }
@@ -176,6 +180,8 @@ namespace BloodDonorTracker.Repository.DonorRequest
 
                 if (response == 0) throw new Exception("Process Failed");
 
+                await _hub.Clients.All.BroadcastMessage();
+
                 return new ResponseMessage("Process Success");
             }
             catch (System.Exception ex)
@@ -195,6 +201,8 @@ namespace BloodDonorTracker.Repository.DonorRequest
                 data.isRead = true;
                 _context.DonorRequests.Update(data);
                 await _context.SaveChangesAsync();
+
+                await _hub.Clients.All.BroadcastMessage();
             }
             catch (System.Exception ex)
             {

@@ -14,5 +14,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4"/>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.9.0"/>
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0"/>
   </ItemGroup>
 </Project>

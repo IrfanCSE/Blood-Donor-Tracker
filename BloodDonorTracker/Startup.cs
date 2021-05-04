@@ -1,6 +1,7 @@
 using BloodDonorTracker.Context;
 using BloodDonorTracker.ErrorHandling;
 using BloodDonorTracker.Extensions;
+using BloodDonorTracker.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace BloodDonorTracker
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSignalR();
 
             // Database Connection
             services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
@@ -41,6 +43,7 @@ namespace BloodDonorTracker
         public void ConfigureProductionServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSignalR();
 
             // Database Connection
             services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(_configuration.GetConnectionString("ProdDefaultConnection")));
@@ -83,6 +86,11 @@ namespace BloodDonorTracker
             app.UseAuthorization();
 
             app.ConfigureCustomExceptionMiddleware();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<SignalrHub>("/notify");
+            });
 
             app.UseEndpoints(endpoints =>
             {
