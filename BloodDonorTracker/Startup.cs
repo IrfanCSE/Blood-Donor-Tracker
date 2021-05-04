@@ -89,12 +89,8 @@ namespace BloodDonorTracker
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<SignalrHub>("/notify");
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalrHub>("api/notify");
             });
         }
     }

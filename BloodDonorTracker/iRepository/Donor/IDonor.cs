@@ -11,5 +11,6 @@ namespace BloodDonorTracker.iRepository.Donor
         public Task<ResponseMessage> CreateDonor(CreateDonorInfoDTO donor);
         public Task<ResponseMessage> UpdateLocation(string userId, double Longitude, double Latitude);
         public Task<bool> UpdateMapMode(long DonorId, bool Status);
+        public Task SetSinglerConnection(string userId,string connection);
     }
 }

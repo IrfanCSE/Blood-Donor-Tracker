@@ -22,6 +22,7 @@ namespace BloodDonorTracker.Models
         public BlackList BlackList { get; set; }
 
         public double? Distance { get; set; }
+        public string WebSocketConnectionId { get; set; }
 
         public List<DonorRequest> RequestReceive { get; set; }
         public List<DonorRequest> RequestSend { get; set; }

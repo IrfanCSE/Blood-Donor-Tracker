@@ -93,6 +93,24 @@ namespace BloodDonorTracker.Repository.Donor
             }
         }
 
+        public async Task SetSinglerConnection(string userId, string connection)
+        {
+            try
+            {
+                var data = _context.Donors.Where(x => x.UserIdFk == userId && x.IsActive == true).FirstOrDefault();
+
+                if (data == null) throw new Exception("donor not found");
+
+                data.WebSocketConnectionId = connection;
+                _context.Donors.Update(data);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<ResponseMessage> UpdateLocation(string userId, double Longitude, double Latitude)
         {
             try

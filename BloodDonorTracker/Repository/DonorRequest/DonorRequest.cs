@@ -180,7 +180,12 @@ namespace BloodDonorTracker.Repository.DonorRequest
 
                 if (response == 0) throw new Exception("Process Failed");
 
-                await _hub.Clients.All.BroadcastMessage();
+                var user = await _context.Donors.Where(x => x.DonorIdPk == data.RequestDonorIdFk).FirstOrDefaultAsync();
+
+                var userId = await _context.Donors.Where(x => x.DonorIdPk == data.RequestDonorIdFk).Select(x => x.WebSocketConnectionId).FirstOrDefaultAsync();
+
+                if (userId != null)
+                    await _hub.Clients.Client(userId).BroadcastMessage();
 
                 return new ResponseMessage("Process Success");
             }
@@ -202,7 +207,10 @@ namespace BloodDonorTracker.Repository.DonorRequest
                 _context.DonorRequests.Update(data);
                 await _context.SaveChangesAsync();
 
-                await _hub.Clients.All.BroadcastMessage();
+                var userId = await _context.Donors.Where(x => x.DonorIdPk == data.RequestDonorIdFk).Select(x => x.WebSocketConnectionId).FirstOrDefaultAsync();
+
+                if (userId != null)
+                    await _hub.Clients.Client(userId).BroadcastMessage();
             }
             catch (System.Exception ex)
             {

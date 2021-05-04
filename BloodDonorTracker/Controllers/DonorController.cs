@@ -57,5 +57,13 @@ namespace BloodDonorTracker.Controllers
         {
             return Ok(await _repository.UpdateMapMode(DonorId, Status));
         }
+
+        [HttpPut]
+        [Route("SetSinglerConnection")]
+        [SwaggerOperation(Description = "Example {  }")]
+        public async Task SetSinglerConnection(string userId, string connection)
+        {
+            await _repository.SetSinglerConnection(userId, connection);
+        }
     }
 }

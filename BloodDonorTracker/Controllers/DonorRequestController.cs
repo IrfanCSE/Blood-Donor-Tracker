@@ -51,6 +51,7 @@ namespace BloodDonorTracker.Controllers
             return Ok(await _repository.GetDonorSendRequests(DonorId,pageNumber,PageSize));
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("CountOfNotRead")]
         [SwaggerOperation(Description = "Example {  }")]
